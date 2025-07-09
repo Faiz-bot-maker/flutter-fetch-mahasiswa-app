@@ -3,7 +3,7 @@ import '../../api/students_api.dart';
 import '../../models/students_model.dart';
 
 class NilaiPage extends StatelessWidget {
-  const NilaiPage({Key? key}) : super(key: key);
+  const NilaiPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,13 @@ class NilaiPage extends StatelessWidget {
                 child: ListTile(
                   leading: const Icon(Icons.grade),
                   title: Text(item.matkul),
-                  trailing: Text(item.nilai, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  trailing: Text(
+                    item.nilai,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               );
             },
@@ -38,4 +44,4 @@ class NilaiPage extends StatelessWidget {
       ),
     );
   }
-} 
+}

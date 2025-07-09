@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
         future: _isLoggedIn(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
           }
           return snapshot.data! ? const HomePage() : const LoginPage();
         },
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   void _navigate(BuildContext context, String key) {
     switch (key) {

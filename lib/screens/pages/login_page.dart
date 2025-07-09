@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/students_api.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -18,7 +18,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final token = await StudentsApi.loginMahasiswa(
         _usernameController.text.trim(),
@@ -29,9 +32,13 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/dashboard');
     } catch (e) {
-      setState(() { _error = e.toString(); });
+      setState(() {
+        _error = e.toString();
+      });
     } finally {
-      setState(() { _loading = false; });
+      setState(() {
+        _loading = false;
+      });
     }
   }
 
@@ -44,7 +51,9 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(32),
           child: Card(
             elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: Form(
@@ -52,7 +61,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Login Mahasiswa', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF223A5E))),
+                    const Text(
+                      'Login Mahasiswa',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF223A5E),
+                      ),
+                    ),
                     const SizedBox(height: 24),
                     TextFormField(
                       controller: _usernameController,
@@ -61,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.person),
                         border: OutlineInputBorder(),
                       ),
-                      validator: (v) => v == null || v.isEmpty ? 'Wajib diisi' : null,
+                      validator: (v) =>
+                          v == null || v.isEmpty ? 'Wajib diisi' : null,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
@@ -72,7 +89,8 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(),
                       ),
                       obscureText: true,
-                      validator: (v) => v == null || v.isEmpty ? 'Wajib diisi' : null,
+                      validator: (v) =>
+                          v == null || v.isEmpty ? 'Wajib diisi' : null,
                     ),
                     const SizedBox(height: 24),
                     if (_error != null) ...[
@@ -86,11 +104,26 @@ class _LoginPageState extends State<LoginPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF223A5E),
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         child: _loading
-                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                          : const Text('Login', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ],
@@ -102,4 +135,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-} 
+}

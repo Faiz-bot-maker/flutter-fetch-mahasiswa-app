@@ -8,7 +8,9 @@ class StudentsApi {
     final response = await http.get(Uri.parse('api/mahasiswa/absensi'));
     if (response.statusCode == 200) {
       final List data = json.decode(response.body); // decode JSON
-      return data.map((e) => AbsensiMatkul.fromJson(e)).toList(); // parsing ke model
+      return data
+          .map((e) => AbsensiMatkul.fromJson(e))
+          .toList(); // parsing ke model
     } else {
       throw Exception('Gagal memuat data absensi'); // error handling
     }
@@ -50,16 +52,16 @@ class StudentsApi {
   // Login mahasiswa, return token jika sukses
   static Future<String> loginMahasiswa(String username, String password) async {
     final response = await http.post(
-      Uri.parse('api/mahasiswa/login'),
+      Uri.parse('http://localhost:9090/login'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'username': username, 'password': password}),
     );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       // Asumsi response: {"token": "..."}
-      return data['token'] as String;
+      return data['data']['token'] as String;
     } else {
       throw Exception('Login gagal: ${response.body}');
     }
   }
-} 
+}

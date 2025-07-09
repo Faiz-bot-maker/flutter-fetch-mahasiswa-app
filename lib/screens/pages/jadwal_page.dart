@@ -1,9 +1,9 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../api/students_api.dart';
 import '../../models/students_model.dart';
 
 class JadwalPage extends StatelessWidget {
-  const JadwalPage({Key? key}) : super(key: key);
+  const JadwalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,4 +38,4 @@ class JadwalPage extends StatelessWidget {
       ),
     );
   }
-} 
+}

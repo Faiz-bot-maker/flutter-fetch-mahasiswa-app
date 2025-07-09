@@ -3,7 +3,7 @@ import '../../api/students_api.dart';
 import '../../models/students_model.dart';
 
 class MatakuliahPage extends StatelessWidget {
-  const MatakuliahPage({Key? key}) : super(key: key);
+  const MatakuliahPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,4 +38,4 @@ class MatakuliahPage extends StatelessWidget {
       ),
     );
   }
-} 
+}

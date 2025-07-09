@@ -2,31 +2,15 @@ import 'package:flutter/material.dart';
 
 class TabMenu extends StatelessWidget {
   final void Function(String) onMenuTap;
-  const TabMenu({Key? key, required this.onMenuTap}) : super(key: key);
+  const TabMenu({super.key, required this.onMenuTap});
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> menus = [
-      {
-        'title': 'Absensi',
-        'key': 'absensi',
-        'icon': Icons.fact_check,
-      },
-      {
-        'title': 'Jadwal',
-        'key': 'jadwal',
-        'icon': Icons.schedule,
-      },
-      {
-        'title': 'Matakuliah',
-        'key': 'matakuliah',
-        'icon': Icons.menu_book,
-      },
-      {
-        'title': 'Nilai',
-        'key': 'nilai',
-        'icon': Icons.grade,
-      },
+      {'title': 'Absensi', 'key': 'absensi', 'icon': Icons.fact_check},
+      {'title': 'Jadwal', 'key': 'jadwal', 'icon': Icons.schedule},
+      {'title': 'Matakuliah', 'key': 'matakuliah', 'icon': Icons.menu_book},
+      {'title': 'Nilai', 'key': 'nilai', 'icon': Icons.grade},
     ];
     final width = MediaQuery.of(context).size.width;
     final crossAxisCount = 2;
@@ -60,7 +44,11 @@ class TabMenu extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(menu['icon'], size: iconSize, color: const Color(0xFF223A5E)),
+                  Icon(
+                    menu['icon'],
+                    size: iconSize,
+                    color: const Color(0xFF223A5E),
+                  ),
                   const SizedBox(height: 10),
                   Text(
                     menu['title'],
@@ -88,4 +76,4 @@ class TabMenu extends StatelessWidget {
       ),
     );
   }
-} 
+}

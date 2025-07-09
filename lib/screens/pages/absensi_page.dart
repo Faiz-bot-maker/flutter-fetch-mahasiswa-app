@@ -3,7 +3,7 @@ import '../../api/students_api.dart';
 import '../../models/students_model.dart';
 
 class AbsensiPage extends StatelessWidget {
-  const AbsensiPage({Key? key}) : super(key: key);
+  const AbsensiPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,10 @@ class AbsensiPage extends StatelessWidget {
           children: const [
             Icon(Icons.school, color: Colors.blueAccent),
             SizedBox(width: 8),
-            Text('Absensi Mata Kuliah', style: TextStyle(color: Colors.black87)),
+            Text(
+              'Absensi Mata Kuliah',
+              style: TextStyle(color: Colors.black87),
+            ),
           ],
         ),
         iconTheme: const IconThemeData(color: Colors.blueAccent),
@@ -42,74 +45,169 @@ class AbsensiPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 elevation: 4,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: DataTable(
-                  headingRowColor: MaterialStateProperty.all(const Color(0xFFB3E5FC)),
-                  dataRowColor: MaterialStateProperty.all(Colors.white),
+                  headingRowColor: WidgetStateProperty.all(
+                    const Color(0xFFB3E5FC),
+                  ),
+                  dataRowColor: WidgetStateProperty.all(Colors.white),
                   columnSpacing: width < 500 ? 8 : 16,
                   columns: [
-                    DataColumn(label: Padding(
-                      padding: EdgeInsets.all(cellPadding),
-                      child: Text('No', style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                    )),
-                    DataColumn(label: Padding(
-                      padding: EdgeInsets.all(cellPadding),
-                      child: Text('Kode', style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                    )),
-                    DataColumn(label: Padding(
-                      padding: EdgeInsets.all(cellPadding),
-                      child: Text('Nama Mata Kuliah', style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                    )),
-                    ...List.generate(16, (i) => DataColumn(label: Padding(
-                      padding: EdgeInsets.all(cellPadding),
-                      child: Text('${i+1}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                    ))),
-                    DataColumn(label: Padding(
-                      padding: EdgeInsets.all(cellPadding),
-                      child: Text('Total', style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                    )),
+                    DataColumn(
+                      label: Padding(
+                        padding: EdgeInsets.all(cellPadding),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Padding(
+                        padding: EdgeInsets.all(cellPadding),
+                        child: Text(
+                          'Kode',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Padding(
+                        padding: EdgeInsets.all(cellPadding),
+                        child: Text(
+                          'Nama Mata Kuliah',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ...List.generate(
+                      16,
+                      (i) => DataColumn(
+                        label: Padding(
+                          padding: EdgeInsets.all(cellPadding),
+                          child: Text(
+                            '${i + 1}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSize,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Padding(
+                        padding: EdgeInsets.all(cellPadding),
+                        child: Text(
+                          'Total',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                   rows: List.generate(data.length, (rowIdx) {
                     final matkul = data[rowIdx];
                     return DataRow(
                       cells: [
-                        DataCell(Padding(
-                          padding: EdgeInsets.all(cellPadding),
-                          child: Text('${rowIdx+1}', style: TextStyle(fontSize: fontSize)),
-                        )),
-                        DataCell(Padding(
-                          padding: EdgeInsets.all(cellPadding),
-                          child: Text(matkul.kode, style: TextStyle(fontSize: fontSize)),
-                        )),
-                        DataCell(Padding(
-                          padding: EdgeInsets.all(cellPadding),
-                          child: Row(
-                            children: [
-                              Icon(Icons.book, color: Colors.blueAccent, size: iconSize),
-                              const SizedBox(width: 2),
-                              Flexible(child: Text(matkul.namaMatkul, style: TextStyle(fontWeight: FontWeight.w500, fontSize: fontSize))),
-                            ],
-                          ),
-                        )),
-                        ...List.generate(16, (i) {
-                          final hadir = matkul.kehadiran.length > i ? matkul.kehadiran[i] : false;
-                          return DataCell(Padding(
+                        DataCell(
+                          Padding(
                             padding: EdgeInsets.all(cellPadding),
-                            child: hadir
-                              ? Icon(Icons.check_circle, color: Colors.green, size: iconSize)
-                              : Icon(Icons.cancel, color: Colors.redAccent, size: iconSize),
-                          ));
-                        }),
-                        DataCell(Padding(
-                          padding: EdgeInsets.all(cellPadding),
-                          child: Row(
-                            children: [
-                              Icon(Icons.emoji_events, color: Colors.amber, size: iconSize-2),
-                              const SizedBox(width: 2),
-                              Text(matkul.total.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize)),
-                            ],
+                            child: Text(
+                              '${rowIdx + 1}',
+                              style: TextStyle(fontSize: fontSize),
+                            ),
                           ),
-                        )),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: EdgeInsets.all(cellPadding),
+                            child: Text(
+                              matkul.kode,
+                              style: TextStyle(fontSize: fontSize),
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: EdgeInsets.all(cellPadding),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.book,
+                                  color: Colors.blueAccent,
+                                  size: iconSize,
+                                ),
+                                const SizedBox(width: 2),
+                                Flexible(
+                                  child: Text(
+                                    matkul.namaMatkul,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: fontSize,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ...List.generate(16, (i) {
+                          final hadir = matkul.kehadiran.length > i
+                              ? matkul.kehadiran[i]
+                              : false;
+                          return DataCell(
+                            Padding(
+                              padding: EdgeInsets.all(cellPadding),
+                              child: hadir
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: Colors.green,
+                                      size: iconSize,
+                                    )
+                                  : Icon(
+                                      Icons.cancel,
+                                      color: Colors.redAccent,
+                                      size: iconSize,
+                                    ),
+                            ),
+                          );
+                        }),
+                        DataCell(
+                          Padding(
+                            padding: EdgeInsets.all(cellPadding),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.emoji_events,
+                                  color: Colors.amber,
+                                  size: iconSize - 2,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  matkul.total.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: fontSize,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   }),
@@ -121,4 +219,4 @@ class AbsensiPage extends StatelessWidget {
       ),
     );
   }
-} 
+}
