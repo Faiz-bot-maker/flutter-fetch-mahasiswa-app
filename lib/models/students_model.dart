@@ -35,15 +35,40 @@ class Matakuliah {
 }
 
 class Nilai {
-  final String matkul;
-  final String nilai;
+  final String courseName;
+  final double totalScore;
+  final List<Component> components;
 
-  Nilai({required this.matkul, required this.nilai});
+  Nilai({
+    required this.courseName,
+    required this.totalScore,
+    required this.components,
+  });
 
   factory Nilai.fromJson(Map<String, dynamic> json) {
+    var componentsJson = json['components'] as List;
+    List<Component> componentsList = componentsJson
+        .map((component) => Component.fromJson(component))
+        .toList();
+
     return Nilai(
-      matkul: json['matkul'] as String,
-      nilai: json['nilai'] as String,
+      courseName: json['course_name'] as String,
+      totalScore: json['total_score'] as double,
+      components: componentsList,
+    );
+  }
+}
+
+class Component {
+  final String name;
+  final double score;
+
+  Component({required this.name, required this.score});
+
+  factory Component.fromJson(Map<String, dynamic> json) {
+    return Component(
+      name: json['name'] as String,
+      score: json['score'] as double,
     );
   }
 }

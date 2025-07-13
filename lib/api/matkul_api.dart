@@ -13,8 +13,6 @@ class MatkulApi {
       headers: {'Authorization': token.toString()},
     );
     if (response.statusCode == 200) {
-      // final List data = json.decode(response.body);
-
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
       // Akses array matakuliah dari properti 'data'

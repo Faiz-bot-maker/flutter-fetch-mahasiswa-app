@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mahasiswa_api/api/auth_api.dart';
 import 'package:flutter_mahasiswa_api/helper/auth_service.dart';
-import '../../api/students_api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -49,16 +48,11 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           // Background image
           SizedBox.expand(
-            child: Image.asset(
-              'assets/bg_login.jpg',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset('assets/bg_login.jpg', fit: BoxFit.cover),
           ),
 
           // Overlay putih semi-transparan agar form tetap jelas
-          Container(
-            color: Colors.white.withOpacity(0.85),
-          ),
+          Container(color: Colors.white.withOpacity(0.85)),
 
           // Konten Form Login
           Center(
@@ -72,7 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 36),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 28,
+                      vertical: 36,
+                    ),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -92,17 +89,17 @@ class _LoginPageState extends State<LoginPage> {
                           const Text(
                             'Silakan login dengan akun mahasiswa anda',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                           const SizedBox(height: 32),
                           TextFormField(
                             controller: _usernameController,
                             decoration: InputDecoration(
                               labelText: 'Username',
-                              prefixIcon: const Icon(Icons.person_outline, color: Color(0xFF0D47A1)),
+                              prefixIcon: const Icon(
+                                Icons.person_outline,
+                                color: Color(0xFF0D47A1),
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -118,7 +115,10 @@ class _LoginPageState extends State<LoginPage> {
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF0D47A1)),
+                              prefixIcon: const Icon(
+                                Icons.lock_outline,
+                                color: Color(0xFF0D47A1),
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -156,8 +156,10 @@ class _LoginPageState extends State<LoginPage> {
                                       height: 22,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2.5,
-                                        valueColor: AlwaysStoppedAnimation<Color>(
-                                            Colors.white),
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              Colors.white,
+                                            ),
                                       ),
                                     )
                                   : const Text(
