@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../api/students_api.dart';
+import 'package:flutter_mahasiswa_api/api/matkul_api.dart';
 import '../../models/students_model.dart';
 
 class MatakuliahPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class MatakuliahPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Matakuliah')),
       body: FutureBuilder<List<Matakuliah>>(
-        future: StudentsApi.fetchMatakuliah(),
+        future: MatkulApi.fetchMatakuliah(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -28,8 +28,8 @@ class MatakuliahPage extends StatelessWidget {
               return Card(
                 child: ListTile(
                   leading: const Icon(Icons.book),
-                  title: Text(item.nama),
-                  subtitle: Text('Kode: \\${item.kode}'),
+                  title: Text(item.name),
+                  subtitle: Text('SKS: ${item.sks}'),
                 ),
               );
             },

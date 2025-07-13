@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_mahasiswa_api/helper/auth_service.dart';
 import 'widget/tab_menu.dart';
-import 'screens/pages/absensi_page.dart';
+// import 'screens/pages/absensi_page.dart';
 import 'screens/pages/jadwal_page.dart';
 import 'screens/pages/matakuliah_page.dart';
 import 'screens/pages/nilai_page.dart';
@@ -14,10 +14,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<bool> _isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') != null;
-  }
+  // Future<bool> _isLoggedIn() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString('token') != null;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: FutureBuilder<bool>(
-        future: _isLoggedIn(),
+        future: AuthService.isLoggedIn(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Scaffold(
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (_) => const LoginPage(),
         '/dashboard': (_) => const HomePage(),
-        '/absensi': (_) => const AbsensiPage(),
+        // '/absensi': (_) => const AbsensiPage(),
         '/jadwal': (_) => const JadwalPage(),
         '/matakuliah': (_) => const MatakuliahPage(),
         '/nilai': (_) => const NilaiPage(),

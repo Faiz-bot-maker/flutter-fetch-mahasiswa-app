@@ -1,16 +1,16 @@
-class Absensi {
-  final String tanggal;
-  final String status;
+// class Absensi {
+//   final String tanggal;
+//   final String status;
 
-  Absensi({required this.tanggal, required this.status});
+//   Absensi({required this.tanggal, required this.status});
 
-  factory Absensi.fromJson(Map<String, dynamic> json) {
-    return Absensi(
-      tanggal: json['tanggal'] as String,
-      status: json['status'] as String,
-    );
-  }
-}
+//   factory Absensi.fromJson(Map<String, dynamic> json) {
+//     return Absensi(
+//       tanggal: json['tanggal'] as String,
+//       status: json['status'] as String,
+//     );
+//   }
+// }
 
 class Jadwal {
   final String matkul;
@@ -19,24 +19,18 @@ class Jadwal {
   Jadwal({required this.matkul, required this.jam});
 
   factory Jadwal.fromJson(Map<String, dynamic> json) {
-    return Jadwal(
-      matkul: json['matkul'] as String,
-      jam: json['jam'] as String,
-    );
+    return Jadwal(matkul: json['matkul'] as String, jam: json['jam'] as String);
   }
 }
 
 class Matakuliah {
-  final String kode;
-  final String nama;
+  final int sks;
+  final String name;
 
-  Matakuliah({required this.kode, required this.nama});
+  Matakuliah({required this.sks, required this.name});
 
   factory Matakuliah.fromJson(Map<String, dynamic> json) {
-    return Matakuliah(
-      kode: json['kode'] as String,
-      nama: json['nama'] as String,
-    );
+    return Matakuliah(sks: json['sks'] as int, name: json['name'] as String);
   }
 }
 
@@ -54,25 +48,25 @@ class Nilai {
   }
 }
 
-class AbsensiMatkul {
+class Absensi {
   final String kode;
-  final String namaMatkul;
+  final String nama;
   final List<bool> kehadiran; // true = hadir, false = tidak hadir
   final int total;
 
-  AbsensiMatkul({
+  Absensi({
     required this.kode,
-    required this.namaMatkul,
+    required this.nama,
     required this.kehadiran,
     required this.total,
   });
 
-  factory AbsensiMatkul.fromJson(Map<String, dynamic> json) {
-    return AbsensiMatkul(
+  factory Absensi.fromJson(Map<String, dynamic> json) {
+    return Absensi(
       kode: json['kode'] as String,
-      namaMatkul: json['namaMatkul'] as String,
+      nama: json['nama'] as String,
       kehadiran: List<bool>.from(json['kehadiran']),
       total: json['total'] as int,
     );
   }
-} 
+}

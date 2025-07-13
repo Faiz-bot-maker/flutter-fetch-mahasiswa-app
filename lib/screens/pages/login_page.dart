@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_mahasiswa_api/api/auth_api.dart';
+import 'package:flutter_mahasiswa_api/helper/auth_service.dart';
 import '../../api/students_api.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,12 +24,11 @@ class _LoginPageState extends State<LoginPage> {
       _error = null;
     });
     try {
-      final token = await StudentsApi.loginMahasiswa(
+      final token = await AuthApi.login(
         _usernameController.text.trim(),
         _passwordController.text.trim(),
       );
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', token);
+      await AuthService.saveToken(token);
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/dashboard');
     } catch (e) {
