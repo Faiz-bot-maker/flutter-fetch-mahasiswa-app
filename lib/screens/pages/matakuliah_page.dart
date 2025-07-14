@@ -29,7 +29,7 @@ class MatakuliahPage extends StatelessWidget {
                 child: ListTile(
                   leading: const Icon(Icons.book),
                   title: Text(item.name),
-                  subtitle: Text('SKS: ${item.sks}'),
+                  subtitle: Text('SKS: ${item.sks}\n Dosen: ${item.lecturer}'),
                 ),
               );
             },

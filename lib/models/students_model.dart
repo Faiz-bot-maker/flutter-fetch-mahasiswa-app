@@ -13,24 +13,47 @@
 // }
 
 class Jadwal {
-  final String matkul;
-  final String jam;
+  final String course;
+  final String lecturer;
+  final String classroom;
+  final String startAt;
+  final String endAt;
+  final DateTime date;
 
-  Jadwal({required this.matkul, required this.jam});
+  Jadwal({
+    required this.course,
+    required this.lecturer,
+    required this.classroom,
+    required this.startAt,
+    required this.endAt,
+    required this.date,
+  });
 
   factory Jadwal.fromJson(Map<String, dynamic> json) {
-    return Jadwal(matkul: json['matkul'] as String, jam: json['jam'] as String);
+    return Jadwal(
+      course: json['course'] as String,
+      lecturer: json['lecturer'] as String,
+      classroom: json['classroom'] as String,
+      startAt: json['start_at'] as String,
+      endAt: json['end_at'] as String,
+      date: DateTime.parse(json['date']),
+    );
   }
 }
 
 class Matakuliah {
   final int sks;
   final String name;
+  final String lecturer;
 
-  Matakuliah({required this.sks, required this.name});
+  Matakuliah({required this.sks, required this.name, required this.lecturer});
 
   factory Matakuliah.fromJson(Map<String, dynamic> json) {
-    return Matakuliah(sks: json['sks'] as int, name: json['name'] as String);
+    return Matakuliah(
+      sks: json['sks'] as int,
+      name: json['name'] as String,
+      lecturer: json['lecturer'] as String,
+    );
   }
 }
 
@@ -74,24 +97,31 @@ class Component {
 }
 
 class Absensi {
-  final String kode;
-  final String nama;
-  final List<bool> kehadiran; // true = hadir, false = tidak hadir
-  final int total;
+  final String status;
+  final DateTime waktu;
 
-  Absensi({
-    required this.kode,
-    required this.nama,
-    required this.kehadiran,
-    required this.total,
-  });
+  Absensi({required this.status, required this.waktu});
 
   factory Absensi.fromJson(Map<String, dynamic> json) {
     return Absensi(
-      kode: json['kode'] as String,
-      nama: json['nama'] as String,
-      kehadiran: List<bool>.from(json['kehadiran']),
-      total: json['total'] as int,
+      status: json['status'] as String,
+      waktu: DateTime.parse(json['time'] as String),
+    );
+  }
+}
+
+class MataKuliah {
+  final String namaMataKuliah;
+  final List<Absensi> daftarAbsensi;
+
+  MataKuliah({required this.namaMataKuliah, required this.daftarAbsensi});
+
+  factory MataKuliah.fromJson(Map<String, dynamic> json) {
+    return MataKuliah(
+      namaMataKuliah: json['course'] as String,
+      daftarAbsensi: (json['attendances'] as List<dynamic>)
+          .map((absensiJson) => Absensi.fromJson(absensiJson))
+          .toList(),
     );
   }
 }

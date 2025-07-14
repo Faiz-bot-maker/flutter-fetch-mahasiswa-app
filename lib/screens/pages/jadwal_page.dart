@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../api/students_api.dart';
+import 'package:flutter_mahasiswa_api/api/jadwal_api.dart';
 import '../../models/students_model.dart';
 
 class JadwalPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class JadwalPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Jadwal')),
       body: FutureBuilder<List<Jadwal>>(
-        future: StudentsApi.fetchJadwal(),
+        future: JadwalApi.fetchJadwal(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -28,8 +28,10 @@ class JadwalPage extends StatelessWidget {
               return Card(
                 child: ListTile(
                   leading: const Icon(Icons.schedule),
-                  title: Text(item.matkul),
-                  subtitle: Text('Jam: \\${item.jam}'),
+                  title: Text(item.course),
+                  subtitle: Text(
+                    'Jam: ${item.startAt} - ${item.endAt}\n Dosen: ${item.lecturer}\n Kelas: ${item.classroom}\n Tanggal: ${item.date}',
+                  ),
                 ),
               );
             },
