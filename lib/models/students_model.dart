@@ -41,6 +41,29 @@ class Jadwal {
   }
 }
 
+class JadwalMendatang {
+  final String course;
+  final String lecturer;
+  final String classroom;
+  final String lecturerStatus;
+
+  JadwalMendatang({
+    required this.course,
+    required this.lecturer,
+    required this.classroom,
+    required this.lecturerStatus,
+  });
+
+  factory JadwalMendatang.fromJson(Map<String, dynamic> json) {
+    return JadwalMendatang(
+      course: json['course'] as String,
+      lecturer: json['lecturer'] as String,
+      classroom: json['classroom'] as String,
+      lecturerStatus: json['lecturer_status'] as String,
+    );
+  }
+}
+
 class Matakuliah {
   final int sks;
   final String name;

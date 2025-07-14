@@ -24,4 +24,22 @@ class JadwalApi {
       throw Exception('Gagal memuat data jadwal');
     }
   }
+
+  static Future<JadwalMendatang> fetchJadwalMendatang() async {
+    final token = await AuthService.getToken();
+
+    final response = await http.get(
+      Uri.parse('http://localhost:9090/api/v1/student/schedules/coming'),
+      headers: {'Authorization': token.toString()},
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+      // Akses array matakuliah dari properti 'data'
+      return JadwalMendatang.fromJson(jsonResponse['data']);
+    } else {
+      throw Exception('Gagal memuat data jadwal');
+    }
+  }
 }
