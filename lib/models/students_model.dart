@@ -107,14 +107,16 @@ class Nilai {
 
 class Component {
   final String name;
-  final double score;
+  // final double score;
+  final double grade;
 
-  Component({required this.name, required this.score});
+  Component({required this.name, required this.grade});
 
   factory Component.fromJson(Map<String, dynamic> json) {
     return Component(
       name: json['name'] as String,
-      score: json['score'] as double,
+      // score: json['score'] as double,
+      grade: json['grade'] as double,
     );
   }
 }
