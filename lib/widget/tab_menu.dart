@@ -39,9 +39,11 @@ class TabMenu extends StatelessWidget {
     
     final width = MediaQuery.of(context).size.width;
     final crossAxisCount = 2;
-    final cardHeight = width < 500 ? 140.0 : 160.0;
-    final iconSize = width < 500 ? 40.0 : 48.0;
-    final fontSize = width < 500 ? 16.0 : 18.0;
+    final cardHeight = width < 400 ? 110.0 : width < 500 ? 130.0 : 160.0;
+    final iconSize = width < 400 ? 28.0 : width < 500 ? 36.0 : 48.0;
+    double fontSize = (width * 0.045).clamp(10.0, 18.0);
+    final isSmall = width < 400;
+    final double cardPadding = width < 350 ? 8 : width < 500 ? 12 : 20;
     
     return Container(
       padding: const EdgeInsets.all(20),
@@ -51,6 +53,8 @@ class TabMenu extends StatelessWidget {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
         childAspectRatio: 1.1,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         children: menus.map((menu) {
           return InkWell(
             onTap: () => onMenuTap(menu['key']!),
@@ -71,6 +75,7 @@ class TabMenu extends StatelessWidget {
                   ),
                 ],
               ),
+              height: cardHeight,
               child: Stack(
                 children: [
                   // Background pattern
@@ -100,8 +105,9 @@ class TabMenu extends StatelessWidget {
                   ),
                   // Content
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(cardPadding),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
@@ -117,15 +123,26 @@ class TabMenu extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 15),
-                        Text(
-                          menu['title'],
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: fontSize,
-                            color: Colors.white,
-                            letterSpacing: 0.5,
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.10),
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          textAlign: TextAlign.center,
+                          child: Text(
+                            menu['title'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: fontSize,
+                              color: Colors.white,
+                              letterSpacing: 0.5,
+                            ),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: true,
+                          ),
                         ),
                         SizedBox(height: 8),
                         Container(

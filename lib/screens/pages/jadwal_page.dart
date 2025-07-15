@@ -14,97 +14,111 @@ class JadwalPage extends StatelessWidget {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: FutureBuilder<List<Jadwal>>(
-        future: JadwalApi.fetchJadwal(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(color: Color(0xFF667eea)));
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
-                  Text('Error:  ${snapshot.error}', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
-                ],
-              ),
-            );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.schedule, size: 64, color: Colors.blue[100]),
-                  const SizedBox(height: 16),
-                  Text('Tidak ada data jadwal', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
-                ],
-              ),
-            );
-          }
-          final jadwalList = snapshot.data!;
-          return ListView.builder(
-            padding: const EdgeInsets.all(20),
-            itemCount: jadwalList.length,
-            itemBuilder: (context, index) {
-              final item = jadwalList[index];
-              return Container(
-                margin: const EdgeInsets.only(bottom: 18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey.withOpacity(0.07),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double width = constraints.maxWidth;
+          double cardPadding = width < 400 ? 10 : width < 600 ? 16 : 20;
+          double cardMargin = width < 400 ? 8 : 18;
+          double iconSize = width < 400 ? 22 : 28;
+          double fontSizeTitle = width < 400 ? 14 : 17;
+          double badgeFontSize = width < 400 ? 10 : 12;
+          double badgePaddingH = width < 400 ? 6 : 10;
+          double badgePaddingV = width < 400 ? 2 : 4;
+          return FutureBuilder<List<Jadwal>>(
+            future: JadwalApi.fetchJadwal(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator(color: Color(0xFF667eea)));
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF38B6FF).withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: const Icon(Icons.schedule, color: Color(0xFF38B6FF), size: 28),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.course,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Color(0xFF222B45)),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                _buildBadge('${item.startAt} - ${item.endAt}', const Color(0xFF60A5FA), icon: Icons.access_time),
-                                const SizedBox(width: 8),
-                                _buildBadge('Kelas: ${item.classroom}', const Color(0xFF64748B)),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                _buildBadge('Dosen: ${item.lecturer}', const Color(0xFF38B6FF)),
-                                const SizedBox(width: 8),
-                                _buildBadge('Tanggal: ${item.date}', const Color(0xFF60A5FA)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
+                      const SizedBox(height: 16),
+                      Text('Error:   {snapshot.error}', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
                     ],
                   ),
-                ),
+                );
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.schedule, size: 64, color: Colors.blue[100]),
+                      const SizedBox(height: 16),
+                      Text('Tidak ada data jadwal', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
+                    ],
+                  ),
+                );
+              }
+              final jadwalList = snapshot.data!;
+              return ListView.builder(
+                padding: EdgeInsets.all(cardPadding),
+                itemCount: jadwalList.length,
+                itemBuilder: (context, index) {
+                  final item = jadwalList[index];
+                  return Container(
+                    margin: EdgeInsets.only(bottom: cardMargin),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueGrey.withOpacity(0.07),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: cardPadding, vertical: cardPadding * 0.9),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF38B6FF).withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.all(width < 400 ? 7 : 10),
+                            child: Icon(Icons.schedule, color: Color(0xFF38B6FF), size: iconSize),
+                          ),
+                          SizedBox(width: width < 400 ? 7 : 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.course,
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSizeTitle, color: Color(0xFF222B45)),
+                                ),
+                                SizedBox(height: width < 400 ? 4 : 8),
+                                Wrap(
+                                  spacing: width < 400 ? 4 : 8,
+                                  runSpacing: 4,
+                                  children: [
+                                    _buildBadge('${item.startAt} - ${item.endAt}', const Color(0xFF60A5FA), icon: Icons.access_time, fontSize: badgeFontSize, paddingH: badgePaddingH, paddingV: badgePaddingV, iconSize: badgeFontSize+2),
+                                    _buildBadge('Kelas: ${item.classroom}', const Color(0xFF64748B), fontSize: badgeFontSize, paddingH: badgePaddingH, paddingV: badgePaddingV),
+                                  ],
+                                ),
+                                SizedBox(height: width < 400 ? 2 : 4),
+                                Wrap(
+                                  spacing: width < 400 ? 4 : 8,
+                                  runSpacing: 4,
+                                  children: [
+                                    _buildBadge('Dosen: ${item.lecturer}', const Color(0xFF38B6FF), fontSize: badgeFontSize, paddingH: badgePaddingH, paddingV: badgePaddingV),
+                                    _buildBadge('Tanggal: ${item.date}', const Color(0xFF60A5FA), fontSize: badgeFontSize, paddingH: badgePaddingH, paddingV: badgePaddingV),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );
@@ -114,9 +128,9 @@ class JadwalPage extends StatelessWidget {
   }
 }
 
-Widget _buildBadge(String text, Color color, {IconData? icon}) {
+Widget _buildBadge(String text, Color color, {IconData? icon, double fontSize = 12, double paddingH = 10, double paddingV = 4, double iconSize = 14}) {
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+    padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: paddingV),
     decoration: BoxDecoration(
       color: color.withOpacity(0.13),
       borderRadius: BorderRadius.circular(8),
@@ -125,16 +139,18 @@ Widget _buildBadge(String text, Color color, {IconData? icon}) {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 14, color: color.darken(0.2)),
-          const SizedBox(width: 4),
+          Icon(icon, size: iconSize, color: color.darken(0.2)),
+          SizedBox(width: 4),
         ],
         Text(
           text,
           style: TextStyle(
             color: color.darken(0.2),
             fontWeight: FontWeight.w600,
-            fontSize: 12,
+            fontSize: fontSize,
           ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
       ],
     ),

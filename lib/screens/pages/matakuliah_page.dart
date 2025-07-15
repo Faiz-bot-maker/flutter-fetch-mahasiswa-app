@@ -43,61 +43,62 @@ class MatakuliahPage extends StatelessWidget {
             );
           }
           final matkulList = snapshot.data!;
-          return ListView.builder(
+          return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
-            itemCount: matkulList.length,
-            itemBuilder: (context, index) {
-              final item = matkulList[index];
-              return Container(
-                margin: const EdgeInsets.only(bottom: 18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey.withOpacity(0.07),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF38B6FF).withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: const Icon(Icons.book, color: Color(0xFF38B6FF), size: 28),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Color(0xFF222B45)),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                _buildBadge('SKS: ${item.sks}', const Color(0xFF60A5FA)),
-                                const SizedBox(width: 8),
-                                _buildBadge('Dosen: ${item.lecturer}', const Color(0xFF64748B)),
-                              ],
-                            ),
-                          ],
-                        ),
+            child: Column(
+              children: List.generate(matkulList.length, (index) {
+                final item = matkulList[index];
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 18),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blueGrey.withOpacity(0.07),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                ),
-              );
-            },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF38B6FF).withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: const Icon(Icons.book, color: Color(0xFF38B6FF), size: 28),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.name,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Color(0xFF222B45)),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  _buildBadge('SKS: ${item.sks}', const Color(0xFF60A5FA)),
+                                  const SizedBox(width: 8),
+                                  _buildBadge('Dosen: ${item.lecturer}', const Color(0xFF64748B)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ),
           );
         },
       ),
