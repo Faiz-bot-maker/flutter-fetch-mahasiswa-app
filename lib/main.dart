@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mahasiswa_api/api/auth_api.dart';
 import 'package:flutter_mahasiswa_api/api/jadwal_api.dart';
 import 'package:flutter_mahasiswa_api/helper/auth_service.dart';
 import 'package:flutter_mahasiswa_api/models/students_model.dart';
@@ -59,7 +60,10 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Color(0xFF1a202c)),
           bodyMedium: TextStyle(color: Color(0xFF1a202c)),
-          titleMedium: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF1a202c)),
+          titleMedium: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1a202c),
+          ),
         ),
         iconTheme: IconThemeData(color: Color(0xFF667eea)),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -102,7 +106,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _showNotification = true;
   JadwalMendatang? _jadwalMendatang;
 
   @override
@@ -116,7 +119,6 @@ class _HomePageState extends State<HomePage> {
       final jadwal = await JadwalApi.fetchJadwalMendatang();
       setState(() {
         _jadwalMendatang = jadwal;
-        _showNotification = true;
       });
     } catch (e) {
       debugPrint('Gagal memuat jadwal mendatang: $e');
@@ -179,6 +181,12 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (shouldLogout == true) {
+      try {
+        await AuthApi.logout(); // panggil logout ke server
+      } catch (e) {
+        debugPrint('Logout gagal ke server: $e');
+      }
+
       await AuthService.clearToken();
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/login');
@@ -203,16 +211,15 @@ class _HomePageState extends State<HomePage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF667eea).withOpacity(0.1),
-              Color(0xFFf8fafc),
-            ],
+            colors: [Color(0xFF667eea).withOpacity(0.1), Color(0xFFf8fafc)],
           ),
         ),
         child: Column(
           children: [
             NotifJadwalMendatang(jadwal: _jadwalMendatang),
-            Expanded(child: TabMenu(onMenuTap: (key) => _navigate(context, key))),
+            Expanded(
+              child: TabMenu(onMenuTap: (key) => _navigate(context, key)),
+            ),
           ],
         ),
       ),
@@ -223,10 +230,7 @@ class _HomePageState extends State<HomePage> {
 // Ubah NotifJadwalMendatang agar selalu tampil dan tidak bisa ditutup
 class NotifJadwalMendatang extends StatelessWidget {
   final JadwalMendatang? jadwal;
-  const NotifJadwalMendatang({
-    super.key,
-    required this.jadwal,
-  });
+  const NotifJadwalMendatang({super.key, required this.jadwal});
 
   @override
   Widget build(BuildContext context) {
@@ -237,10 +241,7 @@ class NotifJadwalMendatang extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFffecd2),
-            Color(0xFFfcb69f),
-          ],
+          colors: [Color(0xFFffecd2), Color(0xFFfcb69f)],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -258,7 +259,11 @@ class NotifJadwalMendatang extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.notification_important, color: Color(0xFFe67e22), size: 24),
+                    Icon(
+                      Icons.notification_important,
+                      color: Color(0xFFe67e22),
+                      size: 24,
+                    ),
                     SizedBox(width: 8),
                     Text(
                       'Jadwal Mendatang',
