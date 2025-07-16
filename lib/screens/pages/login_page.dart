@@ -77,10 +77,20 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Text(
-                            'Selamat Datang',
+                            'UNIVERSITAS BERMUDA',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          const Text(
+                            'Selamat Datang',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF0D47A1),
                             ),
